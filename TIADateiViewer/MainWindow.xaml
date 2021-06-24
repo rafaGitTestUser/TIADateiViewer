@@ -29,18 +29,27 @@
                     <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15" Text="{Binding WindowTitle}" FontSize="16"></TextBlock>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15" Text="{Binding WindowTitle}" FontSize="20" FontWeight="Bold" ></TextBlock>
 
                 <StackPanel Grid.Row="0"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15">
                     <Button fa:Awesome.Content="Regular_WindowClose" Background="Transparent" BorderThickness="0" FontSize="25" Command="{Binding CloseWindowCmd}"></Button>
                 </StackPanel>
-
-                <StackPanel x:Name="StackPanelNodeTypes" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15">
-                    
-                </StackPanel>
+                
+                <!-- In dem ItemsControl sollen dynamisch "Button"Controls erzueugt werden  -->
+                <ItemsControl Grid.Row="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                     
+                </ItemsControl>
 
 
                 <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15">
+                    <DataGrid>
+                        <!-- Spalte1 -> Eigenschaftnamen; Spalte2 -> die Anzahl -->
+                    </DataGrid>
                 </StackPanel>
                 
                 <StackPanel Grid.Row="3" Orientation="Horizontal">

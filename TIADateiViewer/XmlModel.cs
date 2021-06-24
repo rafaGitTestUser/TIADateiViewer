@@ -44,8 +44,5 @@ namespace TIADateiViewer
             Type = type;
             NumberOfTypes = numberOfTypes;
         }
-
-        //public NodeType{string 
-
     }
 }

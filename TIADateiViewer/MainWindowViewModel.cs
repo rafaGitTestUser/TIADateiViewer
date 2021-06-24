@@ -48,25 +48,26 @@ namespace TIADateiViewer
             }
         }
 
-        private XmlDataProvider provider;
-        public XmlDataProvider XmlProvider
-        {
-            get => provider;
-            set
-            {
-                if (provider != value)
-                {
-                    provider = value;
-                    RaisePropertyChange(nameof(WindowTitle));
-                }
-            }
-        }
+        //private XmlDataProvider provider;
+        //public XmlDataProvider XmlProvider
+        //{
+        //    get => provider;
+        //    set
+        //    {
+        //        if (provider != value)
+        //        {
+        //            provider = value;
+        //            RaisePropertyChange(nameof(WindowTitle));
+        //        }
+        //    }
+        //}
 
         public string WindowTitle => $"TIA Selection Tool - Datei Viewer - {FileName}";
         public DelegateCommand FileOpenCmd { get; set; }
         public DelegateCommand CloseWindowCmd { get; set; }
         public DelegateCommand ReadXMLCmd { get; set; }
         public DelegateCommand CreateNodeTypeButton { get; set; }
+        public DelegateCommand GetPropertiesCmd { get; set; }
         public Action Close{ get; set; }
         public Action CreateButton { get; set; }
         public ICollection<IButton> Buttons { get; }
@@ -75,11 +76,17 @@ namespace TIADateiViewer
         {
             FileOpenCmd = new DelegateCommand((o) => OpenFileDialog());
             CloseWindowCmd = new DelegateCommand((o) => CloseWindow());
+            GetPropertiesCmd = new DelegateCommand((o) => GetProperties());
 
             CreateNodeTypeButton = new DelegateCommand((o) => CreateButton());
 
             Buttons = new ObservableCollection<IButton>();
 
+        }
+
+        private void GetProperties()
+        {
+            throw new NotImplementedException();
         }
 
         private void CloseWindow()
@@ -99,19 +106,13 @@ namespace TIADateiViewer
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileInfo fileInfo = new FileInfo(fileDialog.FileName);
-                FileName = fileInfo.Name;
-               
+                FileInfo fi = new FileInfo(fileDialog.FileName);
+                FileName = fi.Name;
                 try
                 {
-                    provider = new XmlDataProvider();
-                    provider.Source = new Uri(fileInfo.FullName, UriKind.Absolute);
-                    provider.XPath = "node/Type";
-                    
-                    var NodeType = XmlModel.GetNodeTypes(fileInfo.FullName);
-
+                    NodeTypes = XmlModel.GetNodeTypes(fi.FullName);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show("The XML file is invalid");
                     return;
